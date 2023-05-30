@@ -16,6 +16,7 @@
     "@fastify/oauth2": "^7.1.0",
     "@prisma/client": "^4.15.0",
     "axios": "^1.4.0",
+    "dotenv": "^16.1.0",
     "fastify": "^4.17.0",
     "zod": "^3.21.4"
   },

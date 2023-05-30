@@ -1,12 +1,16 @@
 import fastify from 'fastify';
 import oauthPlugin from '@fastify/oauth2';
-import {authRoute} from './routes/auth';
 import jwt from '@fastify/jwt';
+import 'dotenv/config';
+
+import {authRoute} from './routes/auth';
 
 const server = fastify();
 
+const port = process.env.PORT ?? 4000;
+
 void server.register(jwt, {
-	secret: '8ZVzlhox^1Wm5qsp#lDB9Fg#',
+	secret: process.env.JWT_SECRET,
 });
 
 void server.register(oauthPlugin, {
@@ -14,8 +18,8 @@ void server.register(oauthPlugin, {
 	scope: ['profile', 'email'],
 	credentials: {
 		client: {
-			id: '1048568934801-s9b0i2ubpktif27k7g5de50591244irk.apps.googleusercontent.com',
-			secret: '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',
+			id: process.env.GOOGLE_CLIENT_ID,
+			secret: process.env.GOOGLE_CLIENT_SECRET,
 		},
 		auth: oauthPlugin.GOOGLE_CONFIGURATION,
 	},
@@ -29,7 +33,7 @@ void server.register(authRoute);
 
 server.get('/ping', async (request, reply) => 'pong\n');
 
-server.listen({port: 4000}, (err, address) => {
+server.listen({port}, (err, address) => {
 	if (err) {
 		console.error(err);
 		process.exit(1);
