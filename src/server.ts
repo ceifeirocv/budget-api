@@ -1,8 +1,13 @@
 import fastify from 'fastify';
 import oauthPlugin from '@fastify/oauth2';
 import {authRoute} from './routes/auth';
+import jwt from '@fastify/jwt';
 
 const server = fastify();
+
+void server.register(jwt, {
+	secret: '8ZVzlhox^1Wm5qsp#lDB9Fg#',
+});
 
 void server.register(oauthPlugin, {
 	name: 'googleOAuth2',
