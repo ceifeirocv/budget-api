@@ -35,7 +35,7 @@ User Management:
 Instale Home Budget API
 
 ```bash
-  git clone https://github.com/ceifeirocv/home-budget-api.git
+  git clone https://github.com/ceifeirocv/budget-api.git
   cd home-budget-api
   npm install
   npm run dev
