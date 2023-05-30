@@ -45,6 +45,10 @@ Instale Home Budget API
 
 **Server:** Node, TypeSricpt, Fastify, Prisma, zod
 
+## Lessons Learned
+
+I have enhanced my TypeScript skills by learning Fastify for building efficient web applications, utilizing Prisma, an exceptional ORM, to seamlessly manage databases, and incorporating validation with Zod to ensure data integrity and reliability.
+
 ## Autores
 
 - [@ceifeirocv](https://www.github.com/ceifeirocv)
