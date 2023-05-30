@@ -43,7 +43,7 @@ Instale Home Budget API
 
 ## Tech Stack
 
-**Server:** Node, TypeSricpt, Fastify, Prisma
+**Server:** Node, TypeSricpt, Fastify, Prisma, zod
 
 ## Autores
 
