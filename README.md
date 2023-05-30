@@ -41,6 +41,10 @@ Instale Home Budget API
   npm run dev
 ```
 
+## Tech Stack
+
+**Server:** Node, TypeSricpt, Fastify, 
+
 ## Autores
 
 - [@ceifeirocv](https://www.github.com/ceifeirocv)
