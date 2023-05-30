@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 import oauthPlugin from "@fastify/oauth2";
+import axios from "axios";
 
 const server = fastify()
 
@@ -14,17 +15,27 @@ server.register(oauthPlugin, {
     auth: oauthPlugin.GOOGLE_CONFIGURATION
   },
   // register a fastify url to start the redirect flow
-  startRedirectPath: '/login/google',
+  startRedirectPath: '/auth/google',
   // facebook redirect here after the user login
   callbackUri: 'http://localhost:4000/auth/google/callback'
 })
 
 server.get('/auth/google/callback', async function (request, reply) {
-  const { token } = await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request)
-  console.log(token)
+  try {
+    const { token } = await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request)
+    const response = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
+      headers: {
+        Authorization: 'Bearer ' + token.access_token,
+      },
+    });
+    console.log('Axios: ', response.data);
+    return response.data
 
-  return token
-  
+  } catch (error) {
+    console.error(error);
+    return error
+  }
+
 })
 
 server.get('/ping', async (request, reply) => {
