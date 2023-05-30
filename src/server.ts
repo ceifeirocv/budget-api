@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import oauthPlugin from '@fastify/oauth2';
-import axios from 'axios';
+import {authRoute} from './routes/auth';
 
 const server = fastify();
 
@@ -20,22 +20,7 @@ void server.register(oauthPlugin, {
 	callbackUri: 'http://localhost:4000/auth/google/callback',
 });
 
-server.get('/auth/google/callback', async function (request, reply) {
-	try {
-		const {token} = await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
-		const response = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
-			headers: {
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				Authorization: 'Bearer ' + token.access_token,
-			},
-		});
-		console.log('Axios: ', response.data);
-		return response.data;
-	} catch (error) {
-		console.error(error);
-		return error;
-	}
-});
+void server.register(authRoute);
 
 server.get('/ping', async (request, reply) => 'pong\n');
 
