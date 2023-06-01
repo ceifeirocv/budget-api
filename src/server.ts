@@ -4,6 +4,7 @@ import cors from '@fastify/cors';
 import 'dotenv/config';
 
 import {authRoute} from './routes/auth';
+import {budgetRoute} from './routes/budget';
 
 const server = fastify();
 
@@ -18,6 +19,7 @@ void server.register(jwt, {
 });
 
 void server.register(authRoute);
+void server.register(budgetRoute);
 
 server.get('/ping', async (request, reply) => 'pong\n');
 

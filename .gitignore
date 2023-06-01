@@ -31,3 +31,6 @@ dist-ssr
 # Docker
 Dockerfile
 docker-compose.yml
+
+# Prisma
+*.db

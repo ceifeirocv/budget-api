@@ -49,6 +49,8 @@ export async function authRoute(fastify: FastifyInstance) {
 				{
 					name: user.name,
 					avatarUrl: user.avatarUrl,
+				},
+				{
 					sub: user.id,
 					expiresIn: '30 days',
 				},
