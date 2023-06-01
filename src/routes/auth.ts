@@ -1,16 +1,21 @@
 import axios from 'axios';
 import {type FastifyInstance} from 'fastify';
-import {z} from 'zod';
+import {string, z} from 'zod';
 import {prisma} from '../lid/prisma';
 
 export async function authRoute(fastify: FastifyInstance) {
-	fastify.get('/auth/google/callback', async function (request, reply) {
+	fastify.post('/login', async (request, reply) => {
 		try {
-			const {token: googleToken} = await this.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(request);
+			const bodySchema = z.object({
+				accessToken: string(),
+			});
+
+			const {accessToken} = bodySchema.parse(request.body);
+
 			const response = await axios.get('https://www.googleapis.com/oauth2/v2/userinfo', {
 				headers: {
 					// eslint-disable-next-line @typescript-eslint/naming-convention
-					Authorization: 'Bearer ' + googleToken.access_token,
+					Authorization: 'Bearer ' + accessToken,
 				},
 			});
 
@@ -32,8 +37,8 @@ export async function authRoute(fastify: FastifyInstance) {
 			if (!user) {
 				user = await prisma.user.create({
 					data: {
-						email: googleUser.name,
-						name: googleUser.email,
+						name: googleUser.name,
+						email: googleUser.email,
 						googleId: googleUser.id,
 						avatarUrl: googleUser.picture,
 					},
@@ -55,3 +60,4 @@ export async function authRoute(fastify: FastifyInstance) {
 		}
 	});
 }
+
