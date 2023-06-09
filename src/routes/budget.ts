@@ -12,20 +12,24 @@ export async function budgetRoute(fastify: FastifyInstance) {
 		const bodySchema = z.object({
 			name: z.string(),
 			amount: z.coerce.number(),
+			color: z.string(),
 		});
 		try {
-			const {name, amount} = bodySchema.parse(request.body);
+			const {name, amount, color} = bodySchema.parse(request.body);
 
 			const budget = await prisma.budget.create({
 				data: {
 					name,
 					amount,
 					userId: request.user.sub,
+					color,
 				},
 			});
 
 			return {budget};
 		} catch (error) {
+			console.log(error);
+
 			return error;
 		}
 	});
