@@ -60,6 +60,13 @@ export async function budgetRoute(fastify: FastifyInstance) {
 					id: budgetId,
 				},
 			});
+			if (!budget) {
+				void reply
+					.code(403)
+					.header('Content-Type', 'application/json; charset=utf-8')
+					.send({error: 'The client does not have access rights to the content'});
+			}
+
 			return {budget};
 		} catch (error) {
 			return error;
@@ -77,6 +84,19 @@ export async function budgetRoute(fastify: FastifyInstance) {
 
 		try {
 			const {budgetId} = paramsSchema.parse(request.params);
+			const budgetToUpdate = await prisma.budget.findFirst({
+				where: {
+					userId: request.user.sub,
+					id: budgetId,
+				},
+			});
+			if (!budgetToUpdate) {
+				void reply
+					.code(403)
+					.header('Content-Type', 'application/json; charset=utf-8')
+					.send({error: 'The client does not have access rights to the content'});
+			}
+
 			const {name, amount} = bodySchema.parse(request.body);
 			const budget = await prisma.budget.update({
 				where: {
@@ -89,6 +109,36 @@ export async function budgetRoute(fastify: FastifyInstance) {
 				},
 			});
 			return {budget};
+		} catch (error) {
+			return error;
+		}
+	});
+	fastify.delete('/budget/:budgetId', async (request, reply) => {
+		const paramsSchema = z.object({
+			budgetId: z.string().uuid(),
+		});
+
+		try {
+			const {budgetId} = paramsSchema.parse(request.params);
+			const budgetToUpdate = await prisma.budget.findFirst({
+				where: {
+					userId: request.user.sub,
+					id: budgetId,
+				},
+			});
+			if (!budgetToUpdate) {
+				void reply
+					.code(403)
+					.header('Content-Type', 'application/json; charset=utf-8')
+					.send({error: 'The client does not have access rights to the content'});
+			}
+
+			await prisma.budget.delete({
+				where: {
+					id: budgetId,
+				},
+			});
+			return;
 		} catch (error) {
 			return error;
 		}
