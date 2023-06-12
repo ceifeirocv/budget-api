@@ -2,15 +2,15 @@
   "name": "budget-api",
   "version": "1.0.0",
   "description": "The Budget API is a powerful and flexible tool designed to help users manage their personal finances effectively",
-  "main": "index.js",
+  "main": "./dist/server.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node index.js",
+    "start": "node ./dist/server.js",
     "dev": "tsx watch ./src/server.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["API", "fastify", "budget"],
+  "author": "Jair Oliveira",
+  "license": "MIT",
   "dependencies": {
     "@fastify/cors": "^8.3.0",
     "@fastify/jwt": "^7.0.0",
