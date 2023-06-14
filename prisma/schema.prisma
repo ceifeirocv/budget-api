@@ -22,12 +22,23 @@ model User {
 }
 
 model Budget {
+  id        String    @id @default(uuid())
+  name      String?
+  amount    Float
+  createdAt DateTime  @default(now())
+  color     String
+  expenses  Expense[]
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
+
+model Expense {
   id        String   @id @default(uuid())
   name      String?
   amount    Float
   createdAt DateTime @default(now())
-  color     String
 
-  User   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
+  Budget   Budget @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  budgetId String
 }

@@ -35,6 +35,12 @@ Budget:
 - Get Budget
 - Update Budget
 - Delete Budget
+Expense:
+- Create Expense
+- Get Expenses
+- Get Expense
+- Update Expense
+- Delete Expense
 
 ## Instalação
 
