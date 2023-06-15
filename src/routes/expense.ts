@@ -42,6 +42,15 @@ export async function expenseRoute(fastify: FastifyInstance) {
 						userId: request.user.sub,
 					},
 				},
+				include: {
+					// eslint-disable-next-line @typescript-eslint/naming-convention
+					Budget: {
+						select: {
+							color: true,
+							name: true,
+						},
+					},
+				},
 			});
 			return {expenses};
 		} catch (error) {
