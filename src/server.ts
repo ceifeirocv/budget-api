@@ -23,9 +23,9 @@ void server.register(authRoute);
 void server.register(budgetRoute);
 void server.register(expenseRoute);
 
-server.get('/ping', async (request, reply) => 'pong\n');
+server.get('/', async (request, reply) => 'welcome to Budget Api');
 
-server.listen({port}, (err, address) => {
+server.listen({port, host: '0.0.0.0'}, (err, address) => {
 	if (err) {
 		console.error(err);
 		process.exit(1);
