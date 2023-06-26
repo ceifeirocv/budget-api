@@ -29,12 +29,14 @@ User Management:
 - Authenticate users
 - Update user information
 - Delete user accounts
+
 Budget:
 - Create Budget
 - Get Budgets
 - Get Budget
 - Update Budget
 - Delete Budget
+
 Expense:
 - Create Expense
 - Get Expenses
