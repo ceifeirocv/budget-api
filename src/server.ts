@@ -49,9 +49,10 @@ async function main() {
 				tags: [
 					{name: 'User', description: 'User related end-points'},
 				],
-				servers: [{
-					url: 'http://localhost:4000',
-				}],
+				servers: [
+					{url: 'http://localhost:4000'},
+					{url: 'https://budget-api-nn6x.onrender.com/'},
+				],
 				components: {
 					securitySchemes: {
 						bearerAuth: {
