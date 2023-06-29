@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {buildJsonSchemas} from 'fastify-zod';
 import {z} from 'zod';
 
@@ -16,6 +17,10 @@ const expenseResponseSchema = z.object({
 		amount: z.coerce.number(),
 		createdAt: z.string().datetime(),
 		budgetId: z.string().uuid(),
+		Budget: z.object({
+			name: z.string(),
+			color: z.string(),
+		}),
 	}),
 });
 
@@ -27,6 +32,10 @@ const expensesResponseSchema = z.object({
 			amount: z.coerce.number(),
 			createdAt: z.string().datetime(),
 			budgetId: z.string().uuid(),
+			Budget: z.object({
+				name: z.string(),
+				color: z.string(),
+			}),
 		},
 	)),
 });

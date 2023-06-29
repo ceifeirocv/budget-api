@@ -38,6 +38,15 @@ export const findExpenseById = async (id: IdInput, userId: IdInput) => {
 			},
 			id,
 		},
+		include: {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Budget: {
+				select: {
+					color: true,
+					name: true,
+				},
+			},
+		},
 	});
 	return expense;
 };
@@ -56,6 +65,15 @@ export const deleteExpense = async (id: IdInput) => {
 	const expense = await prisma.expense.delete({
 		where: {
 			id,
+		},
+		include: {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Budget: {
+				select: {
+					color: true,
+					name: true,
+				},
+			},
 		},
 	});
 	return expense;
