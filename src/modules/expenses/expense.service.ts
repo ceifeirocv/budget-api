@@ -4,7 +4,17 @@ import {type IdInput, type ExpenseBodyInput} from './expense.schema';
 export const createExpense = async (data: ExpenseBodyInput) => {
 	const expense = await prisma.expense.create({
 		data,
+		include: {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Budget: {
+				select: {
+					color: true,
+					name: true,
+				},
+			},
+		},
 	});
+
 	return expense;
 };
 
