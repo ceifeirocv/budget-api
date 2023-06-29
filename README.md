@@ -59,6 +59,10 @@ Instale Home Budget API
 
 [Live Demo in Render](https://budget-api-nn6x.onrender.com)
 
+## Documentation
+
+[Documentation](https://budget-api-nn6x.onrender.com/docs)
+
 ## Tech Stack
 
 **Server:** Node, TypeSricpt, Fastify, Prisma, zod
