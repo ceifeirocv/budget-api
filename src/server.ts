@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+
 import fastify from 'fastify';
 import jwt from '@fastify/jwt';
 import cors from '@fastify/cors';
@@ -14,26 +15,23 @@ import {budgetSchemas} from './modules/budget/budget.schema';
 import {expenseSchemas} from './modules/expenses/expense.schema';
 import {version} from '../package.json';
 
-const server = fastify();
+const buildServer = () => {
+	const server = fastify();
 
-const port = process.env.PORT ?? 4000;
+	void server.register(cors, {
+		origin: '*',
+	});
 
-void server.register(cors, {
-	origin: '*',
-});
+	void server.register(jwt, {
+		secret: process.env.JWT_SECRET,
+	});
+	server.get('/', async (request, reply) => ({server: 'Ok'}));
 
-void server.register(jwt, {
-	secret: process.env.JWT_SECRET,
-});
-
-server.get('/', async (request, reply) => ({server: 'Ok'}));
-
-async function main() {
 	for (const schema of [...authSchemas, ...budgetSchemas, ...expenseSchemas]) {
 		server.addSchema(schema);
 	}
 
-	await server.register(
+	void server.register(
 		swagger,
 		{
 			openapi: {
@@ -65,7 +63,7 @@ async function main() {
 			},
 		},
 	);
-	await server.register(
+	void server.register(
 		swaggerui,
 		{
 			routePrefix: '/docs',
@@ -95,13 +93,7 @@ async function main() {
 	void server.register(budgetRoute, {prefix: 'api/budget'});
 	void server.register(expenseRoute, {prefix: 'api/expense'});
 
-	try {
-		const address = await server.listen({port, host: '0.0.0.0'});
-		console.log(`Server listening at ${address}`);
-	} catch (error) {
-		console.error(error);
-		process.exit(1);
-	}
-}
+	return server;
+};
 
-void main();
+export default buildServer;
